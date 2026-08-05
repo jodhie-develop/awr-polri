@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demo CAT · SIPS Polri</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0c0c0d;
+    --ink-soft:#17171a;
+    --gold:#c9a227;
+    --gold-light:#f2cf5c;
+    --red:#9c2b34;
+    --green:#4f9a5a;
+    --paper:#f6f4ee;
+    --paper-dim:#ece8dc;
+    --line:#dcd6c4;
+    --text:#1c1b18;
+    --text-dim:#6b675c;
+    --radius:14px;
+    --maxw:840px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family:'Plus Jakarta Sans', sans-serif;
+    background:var(--paper);
+    color:var(--text);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px;}
+  h1,h2,h3,.display{
+    font-family:'Bebas Neue', sans-serif;
+    letter-spacing:0.04em;
+    line-height:1.05;
+    text-transform:uppercase;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--gold);
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .eyebrow::before{content:""; width:22px; height:2px; background:var(--gold); display:inline-block;}
+
+  /* ===== TOP BAR ===== */
+  header{
+    background:var(--ink); color:#f3f1e6;
+    border-bottom:3px solid var(--gold);
+    padding:16px 0;
+  }
+  .topbar{display:flex; align-items:center; justify-content:space-between; gap:16px;}
+  .brand{display:flex; align-items:center; gap:12px;}
+  .badge{
+    width:36px; height:36px; border-radius:50%;
+    background:radial-gradient(circle at 32% 28%, var(--gold-light), var(--gold) 60%, #8a6c14 100%);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 0 0 2px var(--ink), 0 0 0 3.5px var(--gold);
+    flex-shrink:0;
+  }
+  .badge svg{width:18px; height:18px;}
+  .brand-text .t1{font-family:'Bebas Neue'; font-size:17px; letter-spacing:.05em;}
+  .brand-text .t2{font-family:'IBM Plex Mono'; font-size:9.5px; color:var(--gold-light); letter-spacing:.12em;}
+  .back-link{font-family:'IBM Plex Mono'; font-size:12px; color:#c9c6ba; display:flex; align-items:center; gap:6px;}
+
+  main{padding:56px 0 90px;}
+
+  /* ===== INTRO ===== */
+  .intro-card{
+    background:var(--ink); color:#f3f1e6; border-radius:var(--radius); padding:40px;
+    position:relative; overflow:hidden;
+  }
+  .intro-card::after{
+    content:""; position:absolute; inset:0;
+    background-image:repeating-linear-gradient(115deg, rgba(201,162,39,.06) 0 2px, transparent 2px 90px);
+    pointer-events:none;
+  }
+  .intro-card h1{font-size:clamp(30px,5vw,44px); margin:14px 0 16px; position:relative; z-index:1;}
+  .intro-card p{color:#c9c6ba; font-size:15px; max-width:52ch; position:relative; z-index:1;}
+  .intro-meta{display:flex; gap:0; margin-top:28px; border-top:1px solid rgba(255,255,255,.14); position:relative; z-index:1;}
+  .intro-meta div{padding:16px 24px 0 0; margin-right:24px; border-right:1px solid rgba(255,255,255,.14);}
+  .intro-meta div:last-child{border-right:none;}
+  .intro-meta b{font-family:'Bebas Neue'; font-size:22px; color:var(--gold-light); display:block;}
+  .intro-meta span{font-size:10.5px; color:#9d998c; font-family:'IBM Plex Mono'; letter-spacing:.05em;}
+  .cat-categories{display:flex; flex-wrap:wrap; gap:8px; margin-top:22px; position:relative; z-index:1;}
+  .cat-categories span{
+    font-family:'IBM Plex Mono'; font-size:11px; padding:6px 12px; border-radius:20px;
+    border:1px solid rgba(201,162,39,.4); color:var(--gold-light);
+  }
+  .btn{
+    font-family:'IBM Plex Mono'; font-size:13px; letter-spacing:.06em; text-transform:uppercase;
+    padding:14px 28px; border-radius:8px; border:1.5px solid var(--gold); background:var(--gold); color:var(--ink);
+    cursor:pointer; display:inline-flex; align-items:center; gap:8px; margin-top:30px;
+    position:relative; z-index:1; transition:all .15s ease;
+  }
+  .btn:hover{background:var(--gold-light); transform:translateY(-2px);}
+  .btn.ghost{background:transparent; color:#f3f1e6; border-color:rgba(255,255,255,.3);}
+  .btn.ghost:hover{border-color:var(--gold-light); color:var(--gold-light);}
+  .btn.full{width:100%; justify-content:center;}
+
+  /* ===== QUIZ ===== */
+  .quiz-wrap{display:none;}
+  .quiz-wrap.active{display:block;}
+  .quiz-top{display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; font-family:'IBM Plex Mono'; font-size:12px; color:var(--text-dim);}
+  .quiz-timer{color:var(--red); font-weight:600;}
+  .progress-track{height:6px; background:var(--line); border-radius:3px; margin-bottom:30px; overflow:hidden;}
+  .progress-fill{height:100%; background:linear-gradient(90deg,var(--gold),var(--gold-light)); border-radius:3px; transition:width .3s ease;}
+
+  .q-card{background:var(--ink); color:#f3f1e6; border-radius:var(--radius); padding:34px;}
+  .q-cat{font-family:'IBM Plex Mono'; font-size:11px; letter-spacing:.1em; color:var(--gold-light); text-transform:uppercase; margin-bottom:14px; display:inline-block; border:1px solid rgba(201,162,39,.4); padding:5px 12px; border-radius:20px;}
+  .q-text{font-size:19px; margin-bottom:24px; line-height:1.45;}
+  .q-opts{display:flex; flex-direction:column; gap:10px;}
+  .q-opt{
+    display:flex; align-items:center; gap:12px; padding:14px 16px; border:1.5px solid rgba(255,255,255,.16);
+    border-radius:9px; cursor:pointer; font-size:14.5px; transition:all .15s;
+  }
+  .q-opt:hover{border-color:var(--gold-light); background:rgba(201,162,39,.08);}
+  .q-opt.selected{border-color:var(--gold-light); background:rgba(201,162,39,.16);}
+  .q-opt .letter{width:26px; height:26px; border-radius:50%; border:1.5px solid rgba(255,255,255,.3); display:flex; align-items:center; justify-content:center; font-size:12px; flex-shrink:0; font-family:'IBM Plex Mono';}
+  .q-opt.selected .letter{background:var(--gold-light); color:var(--ink); border-color:var(--gold-light);}
+
+  .q-nav{display:flex; justify-content:space-between; align-items:center; margin-top:26px;}
+  .q-dots{display:flex; gap:6px; flex-wrap:wrap; max-width:260px;}
+  .q-dots div{width:9px; height:9px; border-radius:50%; background:var(--line); border:1px solid var(--line);}
+  .q-dots div.done{background:var(--gold); border-color:var(--gold);}
+  .q-dots div.current{border-color:var(--ink); box-shadow:0 0 0 2px var(--gold-light);}
+
+  /* ===== RESULT ===== */
+  .result-wrap{display:none;}
+  .result-wrap.active{display:block;}
+  .score-hero{background:var(--ink); color:#f3f1e6; border-radius:var(--radius); padding:44px; text-align:center; position:relative; overflow:hidden;}
+  .score-hero::after{content:""; position:absolute; inset:0; background-image:repeating-linear-gradient(115deg, rgba(201,162,39,.06) 0 2px, transparent 2px 90px); pointer-events:none;}
+  .score-ring{width:160px; height:160px; margin:0 auto 22px; border-radius:50%; display:flex; align-items:center; justify-content:center; position:relative; z-index:1;}
+  .score-ring .big{font-family:'Bebas Neue'; font-size:52px; color:var(--gold-light);}
+  .score-ring .small{font-family:'IBM Plex Mono'; font-size:11px; color:#9d998c; letter-spacing:.06em;}
+  .score-hero h2{font-size:26px; position:relative; z-index:1;}
+  .score-hero p{color:#c9c6ba; font-size:14px; margin-top:8px; max-width:44ch; margin-left:auto; margin-right:auto; position:relative; z-index:1;}
+  .score-pill{display:inline-block; margin-top:16px; font-family:'IBM Plex Mono'; font-size:12px; padding:7px 16px; border-radius:20px; position:relative; z-index:1;}
+  .score-pill.pass{background:rgba(79,154,90,.2); color:#8fd39a; border:1px solid #4f9a5a;}
+  .score-pill.mid{background:rgba(201,162,39,.2); color:var(--gold-light); border:1px solid var(--gold);}
+  .score-pill.low{background:rgba(156,43,52,.2); color:#e39aa0; border:1px solid var(--red);}
+
+  .breakdown{margin-top:28px; display:grid; grid-template-columns:repeat(2,1fr); gap:14px;}
+  @media (max-width:600px){.breakdown{grid-template-columns:1fr;}}
+  .bd-card{background:#fff; border:1px solid var(--line); border-radius:10px; padding:16px 18px;}
+  .bd-top{display:flex; justify-content:space-between; font-size:13px; margin-bottom:8px;}
+  .bd-top b{font-family:'IBM Plex Mono'; font-size:12px;}
+  .bd-bar{height:6px; background:var(--paper-dim); border-radius:3px; overflow:hidden;}
+  .bd-bar div{height:100%; background:var(--gold);}
+
+  .review{margin-top:30px;}
+  .review h3{font-size:20px; margin-bottom:16px;}
+  .review-item{background:#fff; border:1px solid var(--line); border-radius:10px; padding:16px 18px; margin-bottom:10px;}
+  .review-q{font-size:14px; font-weight:600; margin-bottom:8px;}
+  .review-ans{font-family:'IBM Plex Mono'; font-size:12px; display:flex; gap:8px; flex-wrap:wrap;}
+  .review-ans span{padding:4px 10px; border-radius:6px;}
+  .review-ans .u-correct{background:#e4f0e1; color:#2f6b2b;}
+  .review-ans .u-wrong{background:#f3dcdc; color:#9c2b34;}
+  .review-ans .correct{background:#f6e6c9; color:#8a5a11;}
+
+  .result-actions{display:flex; gap:12px; margin-top:30px; flex-wrap:wrap;}
+  .result-actions .btn{margin-top:0;}
+  .btn.dark{background:var(--ink); color:var(--gold-light); border-color:var(--ink);}
+  .btn.dark:hover{background:#000;}
+
+  footer{padding:30px 0; text-align:center; font-family:'IBM Plex Mono'; font-size:11px; color:var(--text-dim);}
+  .note-tag{display:inline-block; margin-top:8px; border:1px dashed var(--line); padding:5px 10px; border-radius:6px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap topbar">
+    <div class="brand">
+      <div class="badge"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2l2.2 4.6 5 .7-3.6 3.5.9 5-4.5-2.4-4.5 2.4.9-5L4.8 7.3l5-.7z" fill="#0c0c0d"/></svg></div>
+      <div class="brand-text"><div class="t1">SIPS POLRI</div><div class="t2">DEMO CAT</div></div>
+    </div>
+    <a href="mockup-sosialisasi-polri.html" class="back-link" style="text-decoration:none;">← Kembali ke Portal Sosialisasi</a>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <!-- ===== INTRO SCREEN ===== -->
+    <div id="introScreen">
+      <div class="eyebrow" style="margin-bottom:14px;">Simulasi Latihan</div>
+      <div class="intro-card">
+        <div class="eyebrow">Persiapan Seleksi</div>
+        <h1>Demo CAT Penerimaan Polri</h1>
+        <p>Simulasi 10 soal gaya Computer Assisted Test (CAT) mencakup Tes Wawasan Kebangsaan, Pengetahuan Kepolisian, Kecermatan, dan Tes Integritas Situasional. Ini hanya latihan mandiri — bukan sistem ujian resmi.</p>
+        <div class="cat-categories">
+          <span>Wawasan Kebangsaan</span>
+          <span>Pengetahuan Polri</span>
+          <span>Kecermatan &amp; Logika</span>
+          <span>Integritas Situasional</span>
+        </div>
+        <div class="intro-meta">
+          <div><b>10</b><span>JUMLAH SOAL</span></div>
+          <div><b>±8</b><span>MENIT PENGERJAAN</span></div>
+          <div><b>1x</b><span>JAWABAN PER SOAL</span></div>
+        </div>
+        <button class="btn" onclick="startQuiz()">Mulai Simulasi →</button>
+      </div>
+    </div>
+
+    <!-- ===== QUIZ SCREEN ===== -->
+    <div class="quiz-wrap" id="quizWrap">
+      <div class="quiz-top">
+        <span id="quizPosition">SOAL 1 DARI 10</span>
+        <span class="quiz-timer" id="quizTimer">⏱ 00:00</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:10%;"></div></div>
+
+      <div class="q-card">
+        <span class="q-cat" id="qCategory">KATEGORI</span>
+        <div class="q-text" id="qText">Pertanyaan akan muncul di sini.</div>
+        <div class="q-opts" id="qOpts"></div>
+      </div>
+
+      <div class="q-nav">
+        <div class="q-dots" id="qDots"></div>
+        <button class="btn dark" id="nextBtn" onclick="nextQuestion()">Soal Berikutnya →</button>
+      </div>
+    </div>
+
+    <!-- ===== RESULT SCREEN ===== -->
+    <div class="result-wrap" id="resultWrap">
+      <div class="score-hero">
+        <div class="score-ring">
+          <div>
+            <div class="big" id="finalScore">0/10</div>
+            <div class="small">SKOR AKHIR</div>
+          </div>
+        </div>
+        <h2>Hasil Simulasi Kamu</h2>
+        <p id="finalMsg">Terus berlatih untuk memperkuat pemahamanmu sebelum seleksi resmi.</p>
+        <span class="score-pill mid" id="finalPill">Perlu Latihan Lagi</span>
+      </div>
+
+      <div class="breakdown" id="breakdown"></div>
+
+      <div class="review">
+        <h3>Pembahasan Jawaban</h3>
+        <div id="reviewList"></div>
+      </div>
+
+      <div class="result-actions">
+        <button class="btn dark" onclick="restartQuiz()">↺ Ulangi Simulasi</button>
+        <a href="mockup-sosialisasi-polri.html" class="btn ghost" style="color:var(--ink); border-color:var(--line); margin-top:0; text-decoration:none;">Kembali ke Beranda</a>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    Demo CAT ini adalah simulasi latihan mandiri, bukan sistem seleksi resmi Polri.
+    <div class="note-tag">MOCK-UP DESAIN · CONTOH SOAL DISUSUN ULANG UNTUK LATIHAN</div>
+  </div>
+</footer>
+
+<script>
+  // ---- Bank soal (disusun ulang dari materi umum latihan TWK/CAT Polri: Pancasila, UUD 1945,
+  // sejarah kebangsaan, tugas Polri, kecermatan angka, dan integritas situasional) ----
+  const questions = [
+    {
+      category: "Wawasan Kebangsaan",
+      text: "Nilai dasar Pancasila yang dijabarkan lebih lanjut ke dalam pasal-pasal UUD 1945 dan peraturan perundang-undangan disebut nilai...",
+      options: ["Dasar", "Instrumental", "Praksis", "Vital", "Fundamental"],
+      answer: 1
+    },
+    {
+      category: "Wawasan Kebangsaan",
+      text: "Semboyan 'Bhinneka Tunggal Ika' yang tercantum dalam lambang negara berasal dari kitab...",
+      options: ["Negarakertagama", "Sutasoma", "Pararaton", "Arjunawiwaha", "Bharatayudha"],
+      answer: 1
+    },
+    {
+      category: "Wawasan Kebangsaan",
+      text: "Lembaga negara yang berwenang mengubah dan menetapkan Undang-Undang Dasar adalah...",
+      options: ["Mahkamah Konstitusi", "Dewan Perwakilan Rakyat", "Majelis Permusyawaratan Rakyat", "Presiden", "Dewan Perwakilan Daerah"],
+      answer: 2
+    },
+    {
+      category: "Pengetahuan Polri",
+      text: "Kegiatan patroli rutin dan pengamanan objek vital yang dilakukan Polri untuk mencegah terjadinya tindak pidana termasuk fungsi...",
+      options: ["Represif", "Preventif", "Yustisial", "Kuratif", "Investigatif"],
+      answer: 1
+    },
+    {
+      category: "Pengetahuan Polri",
+      text: "Satuan kerja Polri yang bertugas mengawasi perilaku dan menjaga profesionalisme anggota di lingkungan internal adalah...",
+      options: ["Reserse Kriminal", "Intelijen Keamanan", "Profesi dan Pengamanan", "Satuan Lalu Lintas", "Sabhara"],
+      answer: 2
+    },
+    {
+      category: "Kecermatan",
+      text: "Perhatikan deret angka berikut: 4, 8, 12, 16, 20, __. Angka selanjutnya adalah...",
+      options: ["22", "24", "26", "28", "30"],
+      answer: 1
+    },
+    {
+      category: "Kecermatan",
+      text: "Sebuah pos jaga mencatat jumlah kendaraan yang lewat: Senin 82, Selasa 95, Rabu 78, Kamis 101, Jumat 89. Selisih jumlah kendaraan terbanyak dan tersedikit adalah...",
+      options: ["18", "20", "23", "25", "27"],
+      answer: 2
+    },
+    {
+      category: "Integritas Situasional",
+      text: "Kamu melihat rekan satu regu terlambat masuk piket namun mencatat jam kehadiran seolah tepat waktu. Sikap yang paling mencerminkan integritas adalah...",
+      options: [
+        "Mendiamkan karena bukan urusanmu",
+        "Ikut mencatat serupa agar tidak dianggap kaku",
+        "Menegur secara pribadi dan mengingatkan aturan yang berlaku",
+        "Menyebarkan hal ini ke seluruh anggota regu",
+        "Membiarkan selama tidak ada yang dirugikan"
+      ],
+      answer: 2
+    },
+    {
+      category: "Integritas Situasional",
+      text: "Saat bertugas di lapangan, seseorang menawarkan uang agar kamu tidak menindak pelanggaran ringan yang ia lakukan. Tindakan yang tepat adalah...",
+      options: [
+        "Menerima karena pelanggarannya ringan",
+        "Menolak dan tetap memproses sesuai prosedur",
+        "Menerima namun tetap memberi sanksi",
+        "Meminta jumlah yang lebih besar",
+        "Mengabaikan pelanggaran tanpa memproses apa pun"
+      ],
+      answer: 1
+    },
+    {
+      category: "Wawasan Kebangsaan",
+      text: "Wawasan Nusantara pada hakikatnya merupakan cara pandang bangsa Indonesia mengenai diri dan lingkungannya yang mengutamakan...",
+      options: [
+        "Kepentingan golongan tertentu",
+        "Persatuan dan kesatuan wilayah serta bangsa",
+        "Keunggulan satu daerah atas daerah lain",
+        "Kepentingan ekonomi jangka pendek",
+        "Dominasi satu suku bangsa"
+      ],
+      answer: 1
+    }
+  ];
+
+  let current = 0;
+  let userAnswers = new Array(questions.length).fill(null);
+  let timerSeconds = 0;
+  let timerInterval = null;
+
+  function startQuiz(){
+    document.getElementById('introScreen').style.display = 'none';
+    document.getElementById('quizWrap').classList.add('active');
+    current = 0;
+    userAnswers = new Array(questions.length).fill(null);
+    buildDots();
+    renderQuestion();
+    startTimer();
+  }
+
+  function startTimer(){
+    clearInterval(timerInterval);
+    timerSeconds = 0;
+    timerInterval = setInterval(()=>{
+      timerSeconds++;
+      const m = String(Math.floor(timerSeconds/60)).padStart(2,'0');
+      const s = String(timerSeconds%60).padStart(2,'0');
+      document.getElementById('quizTimer').textContent = '⏱ ' + m + ':' + s;
+    },1000);
+  }
+
+  function buildDots(){
+    const dotsWrap = document.getElementById('qDots');
+    dotsWrap.innerHTML = '';
+    questions.forEach((q,i)=>{
+      const d = document.createElement('div');
+      d.id = 'dot-'+i;
+      dotsWrap.appendChild(d);
+    });
+  }
+
+  function updateDots(){
+    questions.forEach((q,i)=>{
+      const d = document.getElementById('dot-'+i);
+      d.className = '';
+      if(userAnswers[i] !== null) d.classList.add('done');
+      if(i === current) d.classList.add('current');
+    });
+  }
+
+  function renderQuestion(){
+    const q = questions[current];
+    document.getElementById('quizPosition').textContent = 'SOAL ' + (current+1) + ' DARI ' + questions.length;
+    document.getElementById('progressFill').style.width = (((current+1)/questions.length)*100) + '%';
+    document.getElementById('qCategory').textContent = q.category.toUpperCase();
+    document.getElementById('qText').textContent = q.text;
+
+    const optsWrap = document.getElementById('qOpts');
+    optsWrap.innerHTML = '';
+    const letters = ['A','B','C','D','E'];
+    q.options.forEach((opt, idx)=>{
+      const div = document.createElement('div');
+      div.className = 'q-opt' + (userAnswers[current] === idx ? ' selected' : '');
+      div.innerHTML = '<span class="letter">'+letters[idx]+'</span> ' + opt;
+      div.onclick = ()=>{
+        userAnswers[current] = idx;
+        renderQuestion();
+        updateDots();
+      };
+      optsWrap.appendChild(div);
+    });
+
+    const nextBtn = document.getElementById('nextBtn');
+    nextBtn.textContent = current === questions.length - 1 ? 'Lihat Hasil →' : 'Soal Berikutnya →';
+    updateDots();
+  }
+
+  function nextQuestion(){
+    if(userAnswers[current] === null){
+      alert('Pilih salah satu jawaban terlebih dahulu.');
+      return;
+    }
+    if(current < questions.length - 1){
+      current++;
+      renderQuestion();
+    } else {
+      finishQuiz();
+    }
+  }
+
+  function finishQuiz(){
+    clearInterval(timerInterval);
+    document.getElementById('quizWrap').classList.remove('active');
+    document.getElementById('resultWrap').classList.add('active');
+
+    let correctCount = 0;
+    const catStats = {};
+    questions.forEach((q,i)=>{
+      const isCorrect = userAnswers[i] === q.answer;
+      if(isCorrect) correctCount++;
+      if(!catStats[q.category]) catStats[q.category] = {correct:0, total:0};
+      catStats[q.category].total++;
+      if(isCorrect) catStats[q.category].correct++;
+    });
+
+    document.getElementById('finalScore').textContent = correctCount + '/' + questions.length;
+    const pct = (correctCount/questions.length)*100;
+    const pill = document.getElementById('finalPill');
+    const msg = document.getElementById('finalMsg');
+    if(pct >= 80){
+      pill.textContent = 'Sangat Baik'; pill.className = 'score-pill pass';
+      msg.textContent = 'Pemahamanmu sudah kuat di sebagian besar kategori. Pertahankan dengan latihan rutin.';
+    } else if(pct >= 50){
+      pill.textContent = 'Cukup Baik'; pill.className = 'score-pill mid';
+      msg.textContent = 'Beberapa kategori masih perlu diperdalam. Cek pembahasan di bawah untuk belajar lagi.';
+    } else {
+      pill.textContent = 'Perlu Latihan Lagi'; pill.className = 'score-pill low';
+      msg.textContent = 'Jangan berkecil hati — pelajari pembahasan di bawah lalu coba ulangi simulasi.';
+    }
+
+    const bdWrap = document.getElementById('breakdown');
+    bdWrap.innerHTML = '';
+    Object.keys(catStats).forEach(cat=>{
+      const s = catStats[cat];
+      const p = Math.round((s.correct/s.total)*100);
+      const card = document.createElement('div');
+      card.className = 'bd-card';
+      card.innerHTML = `
+        <div class="bd-top"><span>${cat}</span><b>${s.correct}/${s.total}</b></div>
+        <div class="bd-bar"><div style="width:${p}%;"></div></div>
+      `;
+      bdWrap.appendChild(card);
+    });
+
+    const reviewWrap = document.getElementById('reviewList');
+    reviewWrap.innerHTML = '';
+    const letters = ['A','B','C','D','E'];
+    questions.forEach((q,i)=>{
+      const isCorrect = userAnswers[i] === q.answer;
+      const item = document.createElement('div');
+      item.className = 'review-item';
+      item.innerHTML = `
+        <div class="review-q">${i+1}. ${q.text}</div>
+        <div class="review-ans">
+          <span class="${isCorrect ? 'u-correct' : 'u-wrong'}">Jawabanmu: ${letters[userAnswers[i]]}. ${q.options[userAnswers[i]]}</span>
+          ${!isCorrect ? `<span class="correct">Kunci: ${letters[q.answer]}. ${q.options[q.answer]}</span>` : ''}
+        </div>
+      `;
+      reviewWrap.appendChild(item);
+    });
+  }
+
+  function restartQuiz(){
+    document.getElementById('resultWrap').classList.remove('active');
+    document.getElementById('introScreen').style.display = 'block';
+  }
+</script>
+
+</body>
+</html>
