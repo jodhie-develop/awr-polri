@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign Up &middot; AWR Polri Polda Kalimantan Tengah</title>
+<meta name="description" content="Pendaftaran akun peserta AWR Polri Polda Kalimantan Tengah.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+
+<div class="util-bar">
+  <div class="wrap">
+    <div class="polda">MARKAS BESAR KEPOLISIAN NEGARA REPUBLIK INDONESIA &middot; <b>POLDA KALIMANTAN TENGAH</b></div>
+    <div class="betah-chip" title="Bersih Transparan Akuntabel Humanis">
+      <span class="mark">B</span>
+      <span>BETAH &middot; Bersih Transparan Akuntabel Humanis</span>
+    </div>
+  </div>
+</div>
+
+<header>
+  <nav class="wrap">
+    <a href="index.html" style="text-decoration:none; color:inherit;">
+      <div class="brand">
+        <div class="badge">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 2l2.2 4.6 5 .7-3.6 3.5.9 5-4.5-2.4-4.5 2.4.9-5L4.8 7.3l5-.7z" fill="#0c0c0c"/></svg>
+        </div>
+        <div class="brand-text">
+          <div class="t1">AWR POLRI</div>
+          <div class="t2">POLDA KALIMANTAN TENGAH</div>
+        </div>
+      </div>
+    </a>
+    <div class="navlinks">
+      <a href="index.html">HOME</a>
+      <div class="has-drop">
+        <a href="#">JADWAL SELEKSI</a>
+        <div class="dropdown">
+      <a href="sipss.html">SIPSS</a>
+      <a href="akpol.html">AKPOL</a>
+      <a href="bintara.html">BINTARA</a>
+      <a href="tamtama.html">TAMTAMA</a>
+        </div>
+      </div>
+      <div class="has-drop">
+        <a href="#">GALERI</a>
+        <div class="dropdown">
+      <a href="galeri.html?jalur=sipss">Galeri SIPSS</a>
+      <a href="galeri.html?jalur=akpol">Galeri AKPOL</a>
+      <a href="galeri.html?jalur=bintara">Galeri BINTARA</a>
+      <a href="galeri.html?jalur=tamtama">Galeri TAMTAMA</a>
+        </div>
+      </div>
+      <a href="berita.html">BERITA TERBARU</a>
+      <a href="hotline.html">HOTLINE</a>
+    </div>
+    <div class="nav-cta" id="navCta">
+      <a class="btn ghost" style="border-color:#f3f1e6; color:#f3f1e6;" href="login.html">Login</a>
+      <a class="btn gold" href="signup.html">Sign Up</a>
+    </div>
+  </nav>
+  <div class="wrap" style="padding-top:0; padding-bottom:8px;">
+    <span class="auth-indicator" id="authIndicator"><span class="dot"></span> Belum Login</span>
+  </div>
+</header>
+
+<section>
+  <div class="wrap auth-wrap">
+    <div class="auth-card">
+      <div class="eyebrow">Buat Akun</div>
+      <h1>Sign Up</h1>
+      <p class="sub">Silahkan mendaftar untuk menggunakan menu Demo CAT Akademik dan Kalkulator TKJ.</p>
+      <form onsubmit="mockSignup(event)">
+        <div class="field">
+          <label>Nama Lengkap</label>
+          <input type="text" placeholder="Sesuai KTP" required>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>NIK</label>
+            <input type="text" placeholder="16 digit" required>
+          </div>
+          <div class="field">
+            <label>No. WhatsApp Aktif</label>
+            <input type="text" placeholder="08xx-xxxx-xxxx" required>
+          </div>
+        </div>
+        <div class="field">
+          <label>Email</label>
+          <input type="email" placeholder="nama@email.com" required>
+        </div>
+        <div class="field">
+          <label>Buat Password</label>
+          <input type="password" placeholder="Minimal 8 karakter" required>
+        </div>
+        <button class="btn gold" type="submit" style="width:100%; justify-content:center;">Sign Up</button>
+      </form>
+      <div class="auth-foot">Sudah punya akun? <a href="login.html">Login di sini</a></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="brand" style="margin-bottom:14px;">
+          <div class="badge"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2l2.2 4.6 5 .7-3.6 3.5.9 5-4.5-2.4-4.5 2.4.9-5L4.8 7.3l5-.7z" fill="#0c0c0d"/></svg></div>
+          <div class="brand-text"><div class="t1" style="color:#f3f1e6;">AWR POLRI</div><div class="t2">POLDA KALIMANTAN TENGAH</div></div>
+        </div>
+        <p>Portal tidak resmi untuk keperluan mock-up desain. Warna &amp; identitas mengacu pada palet hitam-emas khas Polri; logo &amp; lambang pada mock-up ini adalah placeholder generik, bukan lambang resmi.</p>
+        <span class="note-tag">MOCK-UP DESAIN &middot; BUKAN SITUS RESMI</span>
+      </div>
+      <div>
+        <h4>Jalur Pendaftaran</h4>
+        <ul>
+          <li><a href="sipss.html">SIPSS</a></li>
+          <li><a href="akpol.html">AKPOL</a></li>
+          <li><a href="bintara.html">Bintara Polri</a></li>
+          <li><a href="tamtama.html">Tamtama</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Kontak Panitia</h4>
+        <ul><li>humas@sips-polri-demo.id</li><li>(0536) 000-0000</li><li>Layanan Senin&ndash;Jumat, 08.00&ndash;16.00</li></ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>&copy; 2026 AWR Polri &mdash; Polda Kalimantan Tengah &middot; Mock-up Desain</span>
+      <span>Dibuat oleh Jodhie Harjanto untuk simulasi tampilan, bukan produk final</span>
+    </div>
+  </div>
+</footer>
+
+<div class="chat-fab" onclick="toggleChat()">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+</div>
+<div class="chat-panel" id="chatPanel">
+  <div class="chat-head"><span class="dot"></span> Asisten AI Sosialisasi Polri</div>
+  <div class="chat-body" id="chatBody">
+    <div class="msg bot">Halo! Saya asisten AI. Tanya soal syarat pendaftaran, jadwal CAT, atau cara mengisi formulir animo ya &#128110;</div>
+  </div>
+  <div class="chat-input">
+    <input type="text" id="chatInput" placeholder="Tulis pertanyaan...">
+    <button onclick="sendChat()">Kirim</button>
+  </div>
+</div>
+
+<script src="assets/app.js"></script>
+
+</body>
+</html>
