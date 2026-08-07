@@ -135,10 +135,62 @@
     align-items:center;
     justify-content:center;
     padding:32px 20px;
-    background:
-      radial-gradient(circle at 15% 15%, rgba(201,162,39,.10), transparent 40%),
-      radial-gradient(circle at 85% 85%, rgba(122,31,31,.08), transparent 45%),
-      var(--brown-900);
+    position:relative;
+    overflow:hidden;
+    background:var(--brown-900);
+  }
+  .bg-anim{
+    position:absolute;inset:0;z-index:0;pointer-events:none;
+  }
+  .bg-anim span{
+    position:absolute;border-radius:50%;
+    filter:blur(50px);
+    opacity:.5;
+    animation:drift 26s ease-in-out infinite;
+  }
+  .bg-anim span:nth-child(1){
+    width:520px;height:520px;left:-160px;top:-160px;
+    background:radial-gradient(circle, var(--gold-500), transparent 65%);
+    animation-duration:24s;
+  }
+  .bg-anim span:nth-child(2){
+    width:480px;height:480px;right:-140px;bottom:-160px;
+    background:radial-gradient(circle, var(--red-700), transparent 65%);
+    animation-duration:30s;
+    animation-delay:-6s;
+  }
+  .bg-anim span:nth-child(3){
+    width:380px;height:380px;right:10%;top:-200px;
+    background:radial-gradient(circle, var(--gold-300), transparent 65%);
+    animation-duration:34s;
+    animation-delay:-14s;
+    opacity:.32;
+  }
+  @keyframes drift{
+    0%{ transform:translate(0,0) scale(1); }
+    33%{ transform:translate(40px,30px) scale(1.08); }
+    66%{ transform:translate(-30px,15px) scale(0.96); }
+    100%{ transform:translate(0,0) scale(1); }
+  }
+  .login-card{ position:relative; z-index:1; }
+  .shimmer-bar{
+    grid-column:1 / -1;
+    height:5px;
+    background:linear-gradient(90deg, var(--brown-800), var(--gold-500), var(--red-700), var(--gold-300), var(--brown-800));
+    background-size:300% 100%;
+    animation:shimmer 9s linear infinite;
+  }
+  @keyframes shimmer{
+    0%{background-position:0% 0%;}
+    100%{background-position:300% 0%;}
+  }
+  @keyframes pulseGlow{
+    0%,100%{ box-shadow:0 0 0 0 rgba(201,162,39,.55); }
+    50%{ box-shadow:0 0 0 9px rgba(201,162,39,0); }
+  }
+  .badge, .agency-badge{ animation:pulseGlow 3s ease-in-out infinite; }
+  @media (prefers-reduced-motion: reduce){
+    .bg-anim span, .shimmer-bar, .badge, .agency-badge{ animation:none; }
   }
   .login-card{
     width:100%;
@@ -395,7 +447,9 @@
     <div>POLDA KALIMANTAN TENGAH</div>
   </div>
   <div class="login-shell">
+    <div class="bg-anim" aria-hidden="true"><span></span><span></span><span></span></div>
     <div class="login-card">
+      <div class="shimmer-bar" aria-hidden="true"></div>
       <div class="login-left">
         <div>
           <div class="eyebrow">Aplikasi Web Rekrutmen Polri</div>
@@ -458,7 +512,7 @@
         <button class="btn btn-primary" style="width:auto;" onclick="doLogin()">Masuk</button>
         <button class="btn btn-ghost" style="width:auto;" onclick="go('signup-form')">Belum punya akun</button>
       </div>
-      <div class="form-note">Silahkan memasukkan data bebas, data tidak akan tersimpan</div>
+      <div class="form-note">Prototype: login akan berhasil dengan data apa pun (belum tersambung basis data).</div>
     </div>
   </main>
 </div>
@@ -717,7 +771,7 @@
   </main>
 </div>
 
-<footer>Aplikasi Web Rekrutmen Polri, Polda Kalimantan Tengah. Warna &amp; logo sementara, menyesuaikan aset resmi.</footer>
+<footer>Prototype visual — Aplikasi Web Rekrutmen Polri, Polda Kalimantan Tengah. Warna &amp; logo sementara, menyesuaikan aset resmi.</footer>
 
 <!-- ============ AI CHATBOT WIDGET (tampil setelah login) ============ -->
 <button id="chat-fab" onclick="toggleChat()" aria-label="Buka asisten AI rekrutmen">
