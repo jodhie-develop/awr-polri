@@ -288,6 +288,56 @@
   .role-card h3{font-size:16px;}
   .role-card .note{font-size:12.5px;color:var(--ink-soft);margin-top:6px;}
 
+  .anggota-menu-list{display:flex;flex-direction:column;gap:16px;margin-top:22px;}
+  .anggota-menu-item{
+    display:flex;align-items:center;gap:14px;
+    border:1.5px solid var(--line);
+    border-radius:var(--radius);
+    padding:20px 22px;
+    background:var(--cream-100);
+    text-align:left;
+    width:100%;
+  }
+  .anggota-menu-item:hover{border-color:var(--gold-500);box-shadow:var(--shadow);background:#fff;}
+  .anggota-menu-item .ami-icon{
+    width:44px;height:44px;border-radius:10px;flex:none;
+    background:var(--brown-800);color:var(--gold-300);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:700;font-size:18px;
+  }
+  .anggota-menu-item .ami-text{flex:1;}
+  .anggota-menu-item .ami-text h3{font-size:15.5px;color:var(--brown-900);font-family:'Fraunces',serif;}
+  .anggota-menu-item .ami-text p{font-size:12.5px;color:var(--ink-soft);margin-top:3px;}
+  .anggota-menu-item .ami-arrow{font-size:18px;color:var(--brown-500);flex:none;}
+  .anggota-menu-item:hover .ami-arrow{color:var(--gold-500);}
+
+  .doc-list{list-style:none;margin:16px 0 0;padding:0;display:flex;flex-direction:column;gap:10px;}
+  .doc-list li{
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    border:1px solid var(--line);border-radius:8px;padding:12px 14px;font-size:13.5px;
+  }
+  .doc-list li .dname{display:flex;align-items:center;gap:10px;color:var(--brown-900);font-weight:600;}
+  .doc-list li .dname .dico{width:30px;height:30px;border-radius:6px;background:var(--cream-200);color:var(--brown-700);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex:none;}
+  .doc-list li a{font-size:12px;font-weight:700;color:var(--brown-800);border:1px solid var(--brown-500);padding:5px 10px;border-radius:6px;}
+  .doc-list li a:hover{background:var(--brown-800);color:#fff;}
+
+  .video-list{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;}
+  @media (max-width:640px){.video-list{grid-template-columns:1fr;}}
+  .video-card{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:#fff;}
+  .video-thumb{
+    height:120px;background:linear-gradient(135deg,var(--brown-800),var(--brown-900));
+    display:flex;align-items:center;justify-content:center;color:var(--gold-300);font-size:30px;
+  }
+  .video-card .vc-body{padding:12px 14px;}
+  .video-card h3{font-size:14px;}
+  .video-card p{font-size:12px;color:var(--ink-soft);margin-top:4px;}
+
+  .report-item{border:1px solid var(--line);border-radius:8px;padding:14px 16px;margin-top:10px;}
+  .report-item .r-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;}
+  .report-item h3{font-size:14px;}
+  .report-item .r-date{font-size:11.5px;color:var(--ink-soft);}
+  .report-item p{font-size:13px;color:var(--ink-soft);margin-top:6px;}
+
   .jalur-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:18px;}
   @media (max-width:760px){.jalur-grid{grid-template-columns:repeat(2,1fr);}}
   .jalur-btn{
@@ -639,7 +689,7 @@
   </main>
 </div>
 
-<!-- ============ POLRI DASHBOARD (placeholder ringkas) ============ -->
+<!-- ============ MENU ANGGOTA (Polri) ============ -->
 <div class="view" id="view-polri-dash">
   <div class="app-header">
     <div class="brand">
@@ -651,10 +701,157 @@
   <main>
     <div class="panel">
       <span class="eyebrow">Panel Anggota Polri</span>
+      <h2>Menu Anggota</h2>
+      <p class="desc">Pilih menu di bawah ini untuk mengakses materi dan pelaporan kegiatan sosialisasi rekrutmen.</p>
+
+      <div class="anggota-menu-list">
+        <button class="anggota-menu-item" onclick="go('berkas-contoh')">
+          <div class="ami-icon">B</div>
+          <div class="ami-text">
+            <h3>Contoh Berkas Pendaftaran</h3>
+            <p>Lihat &amp; unduh contoh dokumen kelengkapan pendaftaran.</p>
+          </div>
+          <div class="ami-arrow">&rarr;</div>
+        </button>
+        <button class="anggota-menu-item" onclick="go('video-sosialisasi')">
+          <div class="ami-icon">V</div>
+          <div class="ami-text">
+            <h3>Video Sosialisasi</h3>
+            <p>Kumpulan video sosialisasi rekrutmen Polri.</p>
+          </div>
+          <div class="ami-arrow">&rarr;</div>
+        </button>
+        <button class="anggota-menu-item" onclick="go('laporan-giat')">
+          <div class="ami-icon">L</div>
+          <div class="ami-text">
+            <h3>Laporan Giat Sosialisasi</h3>
+            <p>Rekap laporan kegiatan sosialisasi yang telah dilaksanakan.</p>
+          </div>
+          <div class="ami-arrow">&rarr;</div>
+        </button>
+      </div>
+
+      <div class="form-actions" style="margin-top:26px;">
+        <button class="back-btn" onclick="go('role')" style="margin-bottom:0;"><span class="arrow">&larr;</span> Kembali</button>
+        <button class="btn btn-ghost" style="width:auto;" onclick="go('animo-recap-view')">Lihat Rekap Animo Pendaftar</button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- ============ CONTOH BERKAS PENDAFTARAN ============ -->
+<div class="view" id="view-berkas-contoh">
+  <div class="app-header">
+    <div class="brand">
+      <div class="badge">P</div>
+      <div class="brand-text"><div class="kicker">Menu Anggota</div><div class="title">Contoh Berkas Pendaftaran</div></div>
+    </div>
+    <button class="btn btn-outline" style="width:auto;padding:8px 16px;" onclick="logout()">Keluar</button>
+  </div>
+  <main>
+    <button class="back-btn" onclick="go('polri-dash')"><span class="arrow">&larr;</span> Kembali</button>
+    <div class="panel">
+      <span class="eyebrow">Menu Anggota</span>
+      <h2>Contoh Berkas Pendaftaran</h2>
+      <p class="desc">Contoh dokumen kelengkapan yang dapat dijadikan acuan bagi calon peserta rekrutmen. Prototype: tautan unduh belum tersambung berkas sungguhan.</p>
+      <ul class="doc-list">
+        <li><span class="dname"><span class="dico">P</span> Contoh Surat Lamaran</span><a href="#" onclick="return false;">Unduh</a></li>
+        <li><span class="dname"><span class="dico">P</span> Contoh Daftar Riwayat Hidup</span><a href="#" onclick="return false;">Unduh</a></li>
+        <li><span class="dname"><span class="dico">P</span> Contoh Surat Pernyataan Belum Menikah</span><a href="#" onclick="return false;">Unduh</a></li>
+        <li><span class="dname"><span class="dico">P</span> Contoh Surat Izin Orang Tua/Wali</span><a href="#" onclick="return false;">Unduh</a></li>
+        <li><span class="dname"><span class="dico">P</span> Checklist Kelengkapan Berkas</span><a href="#" onclick="return false;">Unduh</a></li>
+      </ul>
+    </div>
+  </main>
+</div>
+
+<!-- ============ VIDEO SOSIALISASI ============ -->
+<div class="view" id="view-video-sosialisasi">
+  <div class="app-header">
+    <div class="brand">
+      <div class="badge">P</div>
+      <div class="brand-text"><div class="kicker">Menu Anggota</div><div class="title">Video Sosialisasi</div></div>
+    </div>
+    <button class="btn btn-outline" style="width:auto;padding:8px 16px;" onclick="logout()">Keluar</button>
+  </div>
+  <main>
+    <button class="back-btn" onclick="go('polri-dash')"><span class="arrow">&larr;</span> Kembali</button>
+    <div class="panel">
+      <span class="eyebrow">Menu Anggota</span>
+      <h2>Video Sosialisasi</h2>
+      <p class="desc">Materi video untuk mendukung kegiatan sosialisasi rekrutmen Polri di masyarakat. Prototype: video placeholder, belum tersambung tautan sungguhan.</p>
+      <div class="video-list">
+        <div class="video-card">
+          <div class="video-thumb">&#9654;</div>
+          <div class="vc-body"><h3>Alur Pendaftaran Rekrutmen Polri</h3><p>Durasi 04:12 &middot; Umum</p></div>
+        </div>
+        <div class="video-card">
+          <div class="video-thumb">&#9654;</div>
+          <div class="vc-body"><h3>Syarat &amp; Ketentuan Peserta</h3><p>Durasi 03:05 &middot; Umum</p></div>
+        </div>
+        <div class="video-card">
+          <div class="video-thumb">&#9654;</div>
+          <div class="vc-body"><h3>Tips Tes Kesamaptaan Jasmani</h3><p>Durasi 05:40 &middot; TKJ</p></div>
+        </div>
+        <div class="video-card">
+          <div class="video-thumb">&#9654;</div>
+          <div class="vc-body"><h3>Mengenal Jalur SIPSS, AKPOL, BINTARA &amp; TAMTAMA</h3><p>Durasi 06:22 &middot; Jalur</p></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- ============ LAPORAN GIAT SOSIALISASI ============ -->
+<div class="view" id="view-laporan-giat">
+  <div class="app-header">
+    <div class="brand">
+      <div class="badge">P</div>
+      <div class="brand-text"><div class="kicker">Menu Anggota</div><div class="title">Laporan Giat Sosialisasi</div></div>
+    </div>
+    <button class="btn btn-outline" style="width:auto;padding:8px 16px;" onclick="logout()">Keluar</button>
+  </div>
+  <main>
+    <button class="back-btn" onclick="go('polri-dash')"><span class="arrow">&larr;</span> Kembali</button>
+    <div class="panel">
+      <span class="eyebrow">Menu Anggota</span>
+      <h2>Laporan Giat Sosialisasi</h2>
+      <p class="desc">Rekap kegiatan sosialisasi rekrutmen Polri yang telah dilaksanakan oleh anggota. Prototype: data contoh, belum tersambung basis data.</p>
+
+      <div class="report-item">
+        <div class="r-top"><h3>Sosialisasi ke SMAN 1 Palangka Raya</h3><span class="r-date">12 Jul 2026</span></div>
+        <p>Pemaparan jalur AKPOL &amp; BINTARA kepada siswa kelas XII, dihadiri &plusmn;120 peserta.</p>
+      </div>
+      <div class="report-item">
+        <div class="r-top"><h3>Sosialisasi di Kecamatan Sampit</h3><span class="r-date">28 Jun 2026</span></div>
+        <p>Penyuluhan syarat pendaftaran TAMTAMA &amp; SIPSS bersama Bhabinkamtibmas setempat.</p>
+      </div>
+      <div class="report-item">
+        <div class="r-top"><h3>Sosialisasi Daring via Media Sosial</h3><span class="r-date">15 Jun 2026</span></div>
+        <p>Publikasi info pendaftaran &amp; sesi tanya jawab melalui akun resmi Polda Kalteng.</p>
+      </div>
+
+      <div class="form-actions"><button class="btn btn-primary" style="width:auto;" onclick="alert('Prototype: formulir tambah laporan belum tersambung.')">+ Tambah Laporan</button></div>
+    </div>
+  </main>
+</div>
+
+<!-- ============ REKAP ANIMO PENDAFTAR ============ -->
+<div class="view" id="view-animo-recap-view">
+  <div class="app-header">
+    <div class="brand">
+      <div class="badge">P</div>
+      <div class="brand-text"><div class="kicker">Menu Anggota</div><div class="title">Rekap Animo Pendaftar</div></div>
+    </div>
+    <button class="btn btn-outline" style="width:auto;padding:8px 16px;" onclick="logout()">Keluar</button>
+  </div>
+  <main>
+    <button class="back-btn" onclick="go('polri-dash')"><span class="arrow">&larr;</span> Kembali</button>
+    <div class="panel">
+      <span class="eyebrow">Panel Anggota Polri</span>
       <h2>Rekap Animo Pendaftar</h2>
       <p class="desc">Jumlah klik minat per jalur rekrutmen (data sementara, belum tersambung basis data).</p>
       <div class="breakdown" id="animo-recap"></div>
-      <div class="form-actions"><button class="back-btn" onclick="go('role')"><span class="arrow">&larr;</span> Kembali</button></div>
     </div>
   </main>
 </div>
@@ -878,7 +1075,7 @@ const jalurContent = {
 function go(id){
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
   document.getElementById('view-'+id).classList.add('active');
-  if(id==='polri-dash') renderAnimoRecap();
+  if(id==='animo-recap-view') renderAnimoRecap();
   if(id==='jalur-menu') updateJalurMenuLabels();
   window.scrollTo(0,0);
 }
