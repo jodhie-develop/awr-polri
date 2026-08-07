@@ -48,7 +48,7 @@
   }
   button{font-family:inherit;cursor:pointer;}
   :focus-visible{outline:3px solid var(--gold-500);outline-offset:2px;}
-  @media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important;}}
+  @media (prefers-reduced-motion: reduce){*:not(.bg-anim):not(.bg-anim *):not(.shimmer-bar):not(.badge):not(.agency-badge){animation:none !important;transition:none !important;}}
 
   /* ===== Top identity bar ===== */
   .topbar{
@@ -189,9 +189,6 @@
     50%{ box-shadow:0 0 0 9px rgba(201,162,39,0); }
   }
   .badge, .agency-badge{ animation:pulseGlow 3s ease-in-out infinite; }
-  @media (prefers-reduced-motion: reduce){
-    .bg-anim span, .shimmer-bar, .badge, .agency-badge{ animation:none; }
-  }
   .login-card{
     width:100%;
     max-width:820px;
@@ -467,7 +464,7 @@
       <div class="login-right">
         <div>
           <div class="lbl">Sudah punya akun</div>
-          <button class="btn btn-primary" onclick="go('login-form')">Log In</button>
+          <button class="btn btn-primary" onclick="startLoginFlow()">Log In</button>
         </div>
         <div>
           <div class="lbl">Lihat info tanpa akun</div>
@@ -494,11 +491,14 @@
     </div>
   </div>
   <main>
-    <button class="link-btn" onclick="go('login')">&larr; Kembali</button>
+    <button class="link-btn" onclick="go('role')">&larr; Kembali</button>
     <div class="panel" style="max-width:440px;margin:20px auto 0;">
+      <span class="eyebrow" id="login-form-context">Masuk</span>
       <h2>Log In</h2>
-      <p class="desc">Masuk dengan akun terdaftar untuk melanjutkan proses pendaftaran.</p>
-      <div class="form-grid" style="margin-top:18px;">
+      <p class="desc" id="login-form-desc">Masuk dengan akun terdaftar untuk melanjutkan proses pendaftaran.</p>
+
+      <!-- STAGE 1: kredensial + captcha -->
+      <div id="login-stage-1" class="form-grid" style="margin-top:18px;">
         <div class="field">
           <label>User Name</label>
           <input type="text" id="li-user" placeholder="Masukkan User Name">
@@ -507,12 +507,40 @@
           <label>Kata Sandi</label>
           <input type="password" id="li-pass" placeholder="Masukkan kata sandi">
         </div>
+        <div class="field">
+          <label>Email (untuk OTP)</label>
+          <input type="email" id="li-email" placeholder="nama@email.com">
+        </div>
+        <div class="field">
+          <label id="captcha-label">Verifikasi: 0 + 0 = ?</label>
+          <div style="display:flex;gap:8px;">
+            <input type="text" id="li-captcha" placeholder="Jawaban" style="flex:1;">
+            <button type="button" class="btn btn-ghost" style="width:auto;padding:10px 14px;" onclick="generateCaptcha()" aria-label="Muat ulang captcha">↻</button>
+          </div>
+        </div>
       </div>
-      <div class="form-actions">
-        <button class="btn btn-primary" style="width:auto;" onclick="doLogin()">Masuk</button>
+      <div id="login-error" style="display:none;font-size:12.5px;color:var(--red-700);font-weight:600;margin-top:10px;"></div>
+      <div class="form-actions" id="login-actions-1">
+        <button class="btn btn-primary" style="width:auto;" onclick="sendOtp()">Kirim OTP</button>
         <button class="btn btn-ghost" style="width:auto;" onclick="go('signup-form')">Belum punya akun</button>
       </div>
-      <div class="form-note">Prototype: login akan berhasil dengan data apa pun (belum tersambung basis data).</div>
+
+      <!-- STAGE 2: verifikasi OTP -->
+      <div id="login-stage-2" style="display:none;">
+        <div class="form-grid" style="margin-top:4px;">
+          <div class="field">
+            <label>Kode OTP (6 digit)</label>
+            <input type="text" id="li-otp" placeholder="Masukkan kode OTP" maxlength="6" inputmode="numeric">
+          </div>
+          <div class="form-note" id="otp-demo-note" style="margin-top:0;"></div>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-primary" style="width:auto;" onclick="verifyOtp()">Verifikasi &amp; Masuk</button>
+          <button class="btn btn-ghost" style="width:auto;" onclick="sendOtp(true)">Kirim ulang OTP</button>
+        </div>
+      </div>
+
+      <div class="form-note">Prototype: OTP disimulasikan (belum tersambung layanan email sungguhan), captcha berupa soal hitung sederhana.</div>
     </div>
   </main>
 </div>
@@ -578,12 +606,12 @@
       <h2>Pilih jenis akses Anda</h2>
       <p class="desc">Tentukan apakah Anda mendaftar sebagai calon peserta atau masuk sebagai anggota Polri.</p>
       <div class="role-grid">
-        <button class="role-card" onclick="go('jalur-menu')">
+        <button class="role-card" onclick="chooseRole('pendaftar')">
           <div class="icon">P</div>
           <h3>Pendaftar</h3>
           <div class="note">Lihat jalur rekrutmen, syarat, CAT, dan kalkulator TKJ.</div>
         </button>
-        <button class="role-card" onclick="go('polri-dash')">
+        <button class="role-card" onclick="chooseRole('polri')">
           <div class="icon">✓</div>
           <h3>Polri</h3>
           <div class="note">Masuk sebagai anggota / panitia rekrutmen.</div>
@@ -800,6 +828,8 @@
 /* ================= STATE (in-memory, mock — bukan penyimpanan permanen) ================= */
 let session = { loggedIn:false, name:null };
 let cameFromCat = false;
+let flowMode = 'guest';        // 'guest' = via Tamu, 'login' = via tombol Log In (harus isi login setelah pilih modul)
+let pendingRoleTarget = null;  // 'jalur-menu' atau 'polri-dash' — tujuan setelah login berhasil
 let animo = { SIPSS:0, AKPOL:0, BINTARA:0, TAMTAMA:0 };
 let currentJalur = null;
 
@@ -834,25 +864,111 @@ function go(id){
   window.scrollTo(0,0);
 }
 
-function enterAsGuest(){ session.loggedIn=false; go('role'); }
+function enterAsGuest(){ flowMode='guest'; session.loggedIn=false; go('role'); }
+
+function startLoginFlow(){ flowMode='login'; go('role'); }
+
+function chooseRole(role){
+  const target = (role==='pendaftar') ? 'jalur-menu' : 'polri-dash';
+  if(flowMode==='login' && !session.loggedIn){
+    pendingRoleTarget = target;
+    document.getElementById('login-form-context').textContent = 'Masuk sebagai '+(role==='pendaftar'?'Pendaftar':'Polri');
+    document.getElementById('login-form-desc').textContent = role==='pendaftar'
+      ? 'Masukkan akun terdaftar untuk melanjutkan ke menu jalur pendaftaran.'
+      : 'Masukkan akun anggota/panitia untuk melanjutkan ke panel Polri.';
+    resetLoginForm();
+    go('login-form');
+  } else {
+    go(target);
+  }
+}
+
+/* ---- Captcha sederhana (soal hitung) ---- */
+let captchaAnswer = 0;
+function generateCaptcha(){
+  const a = Math.floor(Math.random()*9)+1;
+  const b = Math.floor(Math.random()*9)+1;
+  captchaAnswer = a+b;
+  document.getElementById('captcha-label').textContent = 'Verifikasi: '+a+' + '+b+' = ?';
+  const capInput = document.getElementById('li-captcha');
+  if(capInput) capInput.value='';
+}
+function resetLoginForm(){
+  ['li-user','li-pass','li-email','li-captcha','li-otp'].forEach(id=>{
+    const el = document.getElementById(id); if(el) el.value='';
+  });
+  document.getElementById('login-stage-1').style.display='grid';
+  document.getElementById('login-actions-1').style.display='flex';
+  document.getElementById('login-stage-2').style.display='none';
+  hideLoginError();
+  generateCaptcha();
+  currentOtp = null;
+}
+function showLoginError(msg){
+  const el = document.getElementById('login-error');
+  el.textContent = msg; el.style.display='block';
+}
+function hideLoginError(){
+  document.getElementById('login-error').style.display='none';
+}
+
+/* ---- Email OTP (disimulasikan di dalam prototype) ---- */
+let currentOtp = null;
+function sendOtp(isResend){
+  hideLoginError();
+  const email = document.getElementById('li-email').value.trim();
+  const capVal = document.getElementById('li-captcha').value.trim();
+
+  if(!isResend){
+    if(!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+      showLoginError('Masukkan email yang valid untuk menerima OTP.'); return;
+    }
+    if(parseInt(capVal,10) !== captchaAnswer){
+      showLoginError('Jawaban verifikasi captcha belum tepat.');
+      generateCaptcha();
+      return;
+    }
+  }
+
+  currentOtp = String(Math.floor(100000 + Math.random()*900000));
+  document.getElementById('login-stage-1').style.display='none';
+  document.getElementById('login-actions-1').style.display='none';
+  document.getElementById('login-stage-2').style.display='block';
+  document.getElementById('li-otp').value='';
+  document.getElementById('otp-demo-note').textContent = 'Kode OTP (mode demo, belum tersambung email sungguhan): '+currentOtp;
+}
+function verifyOtp(){
+  const entered = document.getElementById('li-otp').value.trim();
+  if(!currentOtp || entered !== currentOtp){
+    showLoginError('Kode OTP tidak sesuai. Coba lagi atau kirim ulang.');
+    return;
+  }
+  hideLoginError();
+  doLogin();
+}
 
 function doLogin(){
   const u = document.getElementById('li-user').value.trim();
   session.loggedIn = true;
   session.name = u || 'Pendaftar';
   updateChatVisibility();
-  go('role');
+  const target = pendingRoleTarget || 'role';
+  pendingRoleTarget = null;
+  go(target);
 }
 function doSignup(){
   const n = document.getElementById('su-name').value.trim();
   session.loggedIn = true;
   session.name = n || 'Pendaftar Baru';
+  flowMode = 'guest'; // sudah terautentikasi lewat sign up, tidak perlu login lagi
   updateChatVisibility();
   if(cameFromCat){ cameFromCat=false; go('jalur-detail'); }
-  else { go('role'); }
+  else { go('jalur-menu'); } // Sign Up = mendaftar, langsung ke modul Pendaftar
 }
 function logout(){
   session={loggedIn:false,name:null};
+  flowMode='guest';
+  pendingRoleTarget=null;
   updateChatVisibility();
   closeChat();
   go('login');
@@ -1127,6 +1243,7 @@ function botReply(raw){
 
 /* init */
 renderAnimoRecap();
+generateCaptcha();
 </script>
 </body>
 </html>
