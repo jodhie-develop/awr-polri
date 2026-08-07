@@ -1,0 +1,57 @@
+[
+  {
+    "subject": "Tes Psikologi",
+    "qs": [
+      {
+        "q": "Ketika menghadapi tekanan tugas yang berat, sikap yang paling tepat adalah...",
+        "opts": [
+          "Menghindari tugas",
+          "Tetap tenang dan menyusun prioritas",
+          "Menyalahkan rekan kerja",
+          "Menunda tanpa alasan jelas"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "Jika atasan memberi instruksi yang menurut Anda kurang tepat, langkah yang paling bijak adalah...",
+        "opts": [
+          "Mengabaikan instruksi",
+          "Menyampaikan pendapat secara sopan dan tetap patuh pada keputusan akhir",
+          "Melawan secara terbuka di depan umum",
+          "Mengikuti tanpa berpikir"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "Dalam kerja tim, sikap yang mencerminkan kerja sama yang baik adalah...",
+        "opts": [
+          "Mendominasi seluruh diskusi",
+          "Bekerja sendiri tanpa koordinasi",
+          "Saling mendengarkan dan berbagi tugas",
+          "Menyalahkan anggota lain saat gagal"
+        ],
+        "ans": 2
+      },
+      {
+        "q": "Ketika menemukan pelanggaran yang dilakukan rekan sendiri, tindakan yang tepat adalah...",
+        "opts": [
+          "Diam saja demi menjaga hubungan",
+          "Melaporkan sesuai prosedur yang berlaku",
+          "Menyebarkannya ke publik",
+          "Ikut menutupi pelanggaran"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "Sikap yang mencerminkan pengendalian emosi yang baik saat menghadapi kritik adalah...",
+        "opts": [
+          "Membalas dengan emosi",
+          "Menerima dan mengevaluasi diri",
+          "Mengabaikan sepenuhnya",
+          "Membela diri tanpa mendengarkan"
+        ],
+        "ans": 1
+      }
+    ]
+  }
+]

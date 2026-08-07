@@ -1,0 +1,277 @@
+[
+  {
+    "subject": "Pengetahuan Umum",
+    "qs": [
+      {
+        "q": "Ibu kota Provinsi Kalimantan Tengah adalah...",
+        "opts": [
+          "Palangka Raya",
+          "Banjarmasin",
+          "Sampit",
+          "Pontianak"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Lembaga yang bertugas menjaga keamanan dan ketertiban masyarakat di Indonesia adalah...",
+        "opts": [
+          "TNI",
+          "Polri",
+          "KPK",
+          "BIN"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "Semboyan Tribrata memuat nilai-nilai utama anggota Polri, salah satunya adalah...",
+        "opts": [
+          "Profesional",
+          "Rastra Sewakottama",
+          "Bhinneka Tunggal Ika",
+          "Garuda Pancasila"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "Hari Bhayangkara diperingati setiap tanggal...",
+        "opts": [
+          "1 Juli",
+          "17 Agustus",
+          "10 November",
+          "5 Oktober"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Presiden RI yang menjabat saat ini merupakan kepala negara sekaligus...",
+        "opts": [
+          "Kepala DPR",
+          "Kepala pemerintahan",
+          "Ketua MPR",
+          "Panglima TNI"
+        ],
+        "ans": 1
+      }
+    ]
+  },
+  {
+    "subject": "Wawasan Kebangsaan (TWK)",
+    "qs": [
+      {
+        "q": "Dasar negara Republik Indonesia adalah...",
+        "opts": [
+          "UUD 1945",
+          "Pancasila",
+          "Tap MPR",
+          "Piagam Jakarta"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "Sila Pancasila yang berbunyi \"Persatuan Indonesia\" adalah sila ke-...",
+        "opts": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        "ans": 2
+      },
+      {
+        "q": "Bendera Merah Putih pertama kali dikibarkan pada peristiwa...",
+        "opts": [
+          "Proklamasi Kemerdekaan",
+          "Sumpah Pemuda",
+          "Kongres Pemuda I",
+          "Konferensi Meja Bundar"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Bhinneka Tunggal Ika memiliki arti...",
+        "opts": [
+          "Satu untuk semua",
+          "Berbeda-beda tetapi tetap satu",
+          "Bersatu kita teguh",
+          "Merdeka atau mati"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "Lembaga negara yang berwenang mengubah UUD 1945 adalah...",
+        "opts": [
+          "DPR",
+          "MPR",
+          "MA",
+          "DPD"
+        ],
+        "ans": 1
+      }
+    ]
+  },
+  {
+    "subject": "Bahasa Indonesia",
+    "qs": [
+      {
+        "q": "Kalimat yang menggunakan ejaan baku adalah...",
+        "opts": [
+          "Ia sedang menganalisa data",
+          "Ia sedang menganalisis data",
+          "Ia sedang menganalisakan data",
+          "Ia sedang analisa data"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "Sinonim dari kata \"cermat\" adalah...",
+        "opts": [
+          "Ceroboh",
+          "Teliti",
+          "Lambat",
+          "Ragu"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "Kata baku dari \"nafas\" adalah...",
+        "opts": [
+          "Napas",
+          "Nafass",
+          "Nappas",
+          "Naphas"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Kalimat efektif di bawah ini adalah...",
+        "opts": [
+          "Bagi semua peserta harus hadir tepat waktu",
+          "Semua peserta harus hadir tepat waktu",
+          "Untuk semua peserta wajib hadir tepat waktu",
+          "Kepada peserta agar hadir tepat waktu"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "Antonim dari kata \"maju\" adalah...",
+        "opts": [
+          "Berkembang",
+          "Mundur",
+          "Cepat",
+          "Tinggi"
+        ],
+        "ans": 1
+      }
+    ]
+  },
+  {
+    "subject": "Bahasa Inggris",
+    "qs": [
+      {
+        "q": "Choose the correct sentence:",
+        "opts": [
+          "She go to office every day",
+          "She goes to office every day",
+          "She going to office every day",
+          "She gone to office every day"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "The opposite of \"honest\" is...",
+        "opts": [
+          "Loyal",
+          "Dishonest",
+          "Brave",
+          "Kind"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "\"I ___ a police officer for five years.\" (correct tense)",
+        "opts": [
+          "am",
+          "was",
+          "have been",
+          "will be"
+        ],
+        "ans": 2
+      },
+      {
+        "q": "Synonym of \"responsible\" is...",
+        "opts": [
+          "Careless",
+          "Accountable",
+          "Lazy",
+          "Weak"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "Choose the correct question form:",
+        "opts": [
+          "Where you are going?",
+          "Where are you going?",
+          "Where going you are?",
+          "Where you going are?"
+        ],
+        "ans": 1
+      }
+    ]
+  },
+  {
+    "subject": "Penalaran Numerik",
+    "qs": [
+      {
+        "q": "Jika 3x + 5 = 20, maka nilai x adalah...",
+        "opts": [
+          "3",
+          "5",
+          "7",
+          "15"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "Deret angka 2, 4, 8, 16, ... angka selanjutnya adalah...",
+        "opts": [
+          "20",
+          "24",
+          "32",
+          "30"
+        ],
+        "ans": 2
+      },
+      {
+        "q": "25% dari 200 adalah...",
+        "opts": [
+          "25",
+          "50",
+          "75",
+          "100"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "Jika kecepatan 60 km/jam ditempuh selama 2 jam, jaraknya adalah...",
+        "opts": [
+          "90 km",
+          "100 km",
+          "120 km",
+          "150 km"
+        ],
+        "ans": 2
+      },
+      {
+        "q": "Hasil dari 15 x 4 − 20 adalah...",
+        "opts": [
+          "40",
+          "50",
+          "60",
+          "35"
+        ],
+        "ans": 0
+      }
+    ]
+  }
+]

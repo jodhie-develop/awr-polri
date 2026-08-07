@@ -1,0 +1,8 @@
+[
+  {
+    "subject": "Pengetahuan Umum",
+    "qs": [
+      { "q": "Contoh soal 1...", "opts": ["Opsi A", "Opsi B", "Opsi C", "Opsi D"], "ans": 0 }
+    ]
+  }
+]
